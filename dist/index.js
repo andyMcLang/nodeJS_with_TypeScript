@@ -7,12 +7,20 @@ const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
-app.get('/', (req, res) => {
-    res.send('Terve maailma!');
-});
-app.post('/', (req, res) => {
+app.get('/Id/:id/Name/:name', (req, res) => {
     res.send({
-        data: req.body
+        message: "Hellou maailma!",
+        data: req.params.id,
+        name: req.params.name
+    });
+});
+app.post('/Id/:id/Name/:name', (req, res) => {
+    res.send({
+        data: req.body,
+        params: {
+            id: req.params.id,
+            name: req.params.name
+        }
     });
 });
 app.listen(3000, () => {

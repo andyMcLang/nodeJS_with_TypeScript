@@ -1,17 +1,25 @@
 import express from 'express';
-import bodyParser from 'body-parser';
+import { Request, Response } from 'express';
 
 const app = express();
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 
-app.get('/', (req, res) => {
-    res.send('Terve maailma!');
+app.get('/Id/:id/Name/:name', (req: Request, res: Response) => {
+    res.send({
+        message: "Hellou maailma!",
+        data: req.params.id,
+        name: req.params.name
+    });
 })
 
-app.post('/', (req, res) => {
+app.post('/Id/:id/Name/:name', (req: Request, res: Response) => {
     res.send({
-        data: req.body
+        data: req.body,
+        params: {
+            id: req.params.id,
+            name: req.params.name
+        }
     })
 })
 

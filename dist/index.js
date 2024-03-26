@@ -5,15 +5,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const mysql_1 = __importDefault(require("mysql"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
 app.get('/details/:id', (req, res) => {
     var pool = mysql_1.default.createPool({
-        host: '127.0.0.1',
-        user: 'root',
-        password: 'salasana',
-        database: 'andyl',
+        host: process.env.HOST,
+        user: process.env.USER,
+        password: process.env.PASSWORD,
+        database: process.env.DATABASE,
         connectionLimit: 10,
         multipleStatements: true,
     });
@@ -63,6 +65,6 @@ app.post('/Id/:id/Name/:name', (req, res) => {
         },
     });
 });
-app.listen(3000, () => {
-    console.log('Kuunnellaan porttia 3000!');
+app.listen(process.env.PORT, () => {
+    console.log(`Kuunnellaan porttia ${process.env.PORT}!`);
 });

@@ -1,6 +1,7 @@
-import express from 'express'
-import { Request, Response } from 'express'
+import express, { Request, Response } from 'express'
 import mysql from 'mysql'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const app = express()
 app.use(express.urlencoded({ extended: false }))
@@ -8,10 +9,10 @@ app.use(express.json())
 
 app.get('/details/:id', (req: Request, res: Response) => {
   var pool = mysql.createPool({
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'salasana',
-    database: 'andyl',
+    host: process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE,
     connectionLimit: 10,
     multipleStatements: true,
   })
@@ -74,6 +75,6 @@ app.post('/Id/:id/Name/:name', (req: Request, res: Response) => {
   })
 })
 
-app.listen(3000, () => {
-  console.log('Kuunnellaan porttia 3000!')
+app.listen(process.env.PORT, () => {
+  console.log(`Kuunnellaan porttia ${process.env.PORT}!`)
 })
